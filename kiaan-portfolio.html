@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiaan — Web Designer & Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --black: #0F0E0C;
+    --ink: #1A1916;
+    --rust: #C4400A;
+    --muted: #6B6560;
+    --border: #D4CCB8;
+    --serif: 'Playfair Display', Georgia, serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--rust); }
+
+  .nav-issue {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 10rem 3rem 5rem;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    min-height: 90vh;
+  }
+
+  .hero-left {}
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 1.0;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 38ch;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  .hero-stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .hero-stat {
+    padding: 1.5rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  .hero-scroll {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  /* DIVIDER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--black);
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888;
+  }
+
+  .section-title-big {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #ccc;
+  }
+
+  /* PROJECTS */
+  #projects { border-bottom: 1px solid var(--border); }
+
+  .projects-intro {
+    padding: 3rem 3rem 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+  }
+
+  .projects-intro h2 {
+    font-family: var(--serif);
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .projects-intro p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    max-width: 40ch;
+  }
+
+  /* CATEGORY TABS */
+  .category-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    padding: 0 3rem;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--rust);
+    border-bottom-color: var(--rust);
+  }
+
+  /* PROJECT PANELS */
+  .project-panel { display: none; }
+  .project-panel.active { display: block; }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: none;
+  }
+
+  .project-card {
+    padding: 2.5rem 3rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card:nth-child(even) { border-right: none; }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 0;
+    background: var(--black);
+    transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+  }
+
+  .project-card:hover::before { height: 100%; }
+  .project-card:hover .proj-num,
+  .project-card:hover .proj-title,
+  .project-card:hover .proj-desc,
+  .project-card:hover .proj-tags span,
+  .project-card:hover .proj-link { color: var(--cream); }
+  .project-card:hover .proj-tags span { border-color: #444; }
+
+  .project-card > * { position: relative; z-index: 1; }
+
+  .proj-num {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.2rem;
+    transition: color 0.25s;
+  }
+
+  .proj-title {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    transition: color 0.25s;
+  }
+
+  .proj-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    transition: color 0.25s;
+  }
+
+  .proj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .proj-tags span {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    color: var(--muted);
+    transition: all 0.25s;
+  }
+
+  .proj-link {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rust);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.25s;
+  }
+
+  .proj-link::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+
+  .project-card:hover .proj-link::after { transform: translateX(4px); }
+
+  /* ADD PROJECT */
+  .add-project-card {
+    padding: 2.5rem 3rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    min-height: 220px;
+    border-right: none;
+    transition: background 0.2s;
+    gap: 1rem;
+  }
+
+  .add-project-card:hover { background: #EFEAD9; }
+
+  .add-icon {
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--muted);
+    border-radius: 50%;
+  }
+
+  .add-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 14, 12, 0.85);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--cream);
+    max-width: 640px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 3rem;
+    position: relative;
+    border: 1px solid var(--border);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover {
+    background: var(--black);
+    color: var(--cream);
+    border-color: var(--black);
+  }
+
+  .modal h3 {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .modal-meta {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .modal-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1.5rem 0;
+  }
+
+  .modal p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .modal-image {
+    width: 100%;
+    height: 200px;
+    background: var(--black);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .modal-image-inner {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 3rem;
+    color: #333;
+    letter-spacing: -0.03em;
+  }
+
+  .modal-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--black);
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    border: 1px solid var(--black);
+    transition: all 0.2s;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  .modal-cta:hover {
+    background: var(--rust);
+    border-color: var(--rust);
+  }
+
+  /* ADD PROJECT FORM */
+  .add-form { display: none; }
+  .add-form.open { display: block; }
+
+  .form-field {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus { border-color: var(--ink); }
+
+  .form-field textarea { resize: vertical; min-height: 100px; }
+
+  .form-submit {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--black);
+    border: none;
+    padding: 0.8rem 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .form-submit:hover { background: var(--rust); }
+
+  /* ABOUT */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-left {
+    padding: 4rem 3rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .about-left h2 {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-left h2 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .about-left p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-right {
+    padding: 4rem 3rem;
+  }
+
+  .skill-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-row:first-child { border-top: 1px solid var(--border); }
+
+  .skill-name {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .skill-bar-wrap {
+    flex: 1;
+    margin: 0 1.5rem;
+    height: 3px;
+    background: var(--border);
+    position: relative;
+  }
+
+  .skill-bar {
+    height: 100%;
+    background: var(--rust);
+    width: 0;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .skill-pct {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    min-width: 2rem;
+    text-align: right;
+  }
+
+  /* CONTACT */
+  #contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .contact-left {
+    padding: 5rem 3rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .contact-left h2 {
+    font-family: var(--serif);
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .contact-left h2 em {
+    font-style: italic;
+    display: block;
+    color: var(--rust);
+  }
+
+  .contact-left p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 38ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .contact-detail-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 60px;
+  }
+
+  .contact-detail-value {
+    font-size: 0.95rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .contact-detail-value:hover { color: var(--rust); }
+
+  .contact-right {
+    padding: 5rem 3rem;
+  }
+
+  .contact-right h3 {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .contact-field {
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .contact-field input,
+  .contact-field textarea {
+    width: 100%;
+    padding: 0.8rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .contact-field input:focus,
+  .contact-field textarea:focus { border-bottom-color: var(--ink); }
+
+  .contact-field textarea { resize: none; height: 100px; }
+
+  .contact-submit {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--ink);
+    border: none;
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 1rem;
+  }
+
+  .contact-submit:hover { background: var(--rust); }
+
+  .sent-msg {
+    display: none;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--black);
+  }
+
+  .footer-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--cream);
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: #555;
+    text-transform: uppercase;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag, h1, .hero-sub {
+    animation: fadeUp 0.8s ease both;
+  }
+
+  h1 { animation-delay: 0.1s; }
+  .hero-sub { animation-delay: 0.2s; }
+  .hero-stat-row { animation: fadeUp 0.8s 0.3s ease both; }
+
+  /* BTN */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 1.8rem;
+    background: var(--black);
+    color: var(--cream);
+    border: 1px solid var(--black);
+    transition: all 0.25s;
+  }
+
+  .cta-btn:hover {
+    background: var(--rust);
+    border-color: var(--rust);
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-issue { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 3rem; min-height: auto; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card { border-right: none !important; }
+    #about, #contact { grid-template-columns: 1fr; }
+    .about-left { border-right: none; border-bottom: 1px solid var(--border); }
+    .contact-left { border-right: none; border-bottom: 1px solid var(--border); }
+    h1 { font-size: 3rem; }
+    .contact-left h2 { font-size: 2.5rem; }
+    .projects-intro { flex-direction: column; gap: 1rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    nav { flex-wrap: wrap; gap: 1rem; }
+    .nav-links { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Kiaan.</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-issue">Vol. I — 2025</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Web Designer & Developer</div>
+    <h1>Kiaan<br><em>builds the web.</em></h1>
+    <p class="hero-sub">Designing digital experiences that are as thoughtful as they are functional. From concept to code, end to end.</p>
+    <a href="#projects" class="cta-btn">View Work →</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <span class="stat-num">04</span>
+        <span class="stat-label">Disciplines</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Curiosity</span>
+      </div>
+    </div>
+    <span class="hero-scroll">Scroll to explore</span>
+  </div>
+</section>
+
+<!-- PROJECTS SECTION HEADER -->
+<div class="section-header">
+  <span class="section-label">§ Selected Work</span>
+  <span class="section-title-big">Four disciplines, one vision</span>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-intro">
+    <h2>Work.</h2>
+    <p>A curated selection of projects across web design, development, branding, and digital experiences.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="category-tabs">
+    <button class="tab-btn active" data-tab="web">Web Design</button>
+    <button class="tab-btn" data-tab="dev">Development</button>
+    <button class="tab-btn" data-tab="brand">Branding</button>
+    <button class="tab-btn" data-tab="exp">Experiences</button>
+  </div>
+
+  <!-- WEB DESIGN -->
+  <div class="project-panel active" id="panel-web">
+    <div class="projects-grid">
+      <div class="project-card" onclick="openModal('web1')">
+        <div class="proj-num">001 — Web Design</div>
+        <div class="proj-title">Studio Arkiv</div>
+        <p class="proj-desc">Editorial portfolio for a Berlin-based architecture studio. Minimal grid, typographic hierarchy, and zero compromise.</p>
+        <div class="proj-tags">
+          <span>Figma</span><span>Editorial</span><span>Grid System</span>
+        </div>
+        <span class="proj-link">View project</span>
+      </div>
+      <div class="project-card" onclick="openModal('web2')">
+        <div class="proj-num">002 — Web Design</div>
+        <div class="proj-title">Folio & Co.</div>
+        <p class="proj-desc">E-commerce redesign for a premium stationery brand. Focused on texture, touch, and tactile digital experience.</p>
+        <div class="proj-tags">
+          <span>UX Research</span><span>Prototyping</span><span>Shopify</span>
+        </div>
+        <span class="proj-link">View project</span>
+      </div>
+      <div class="project-card add-project-card" onclick="openAddForm('web')">
+        <div class="add-icon">+</div>
+        <div class="add-label">Add a project</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEVELOPMENT -->
+  <div class="project-panel" id="panel-dev">
+    <div class="projects-grid">
+      <div class="project-card" onclick="openModal('dev1')">
+        <div class="proj-num">003 — Development</div>
+        <div class="proj-title">Patchwork CMS</div>
+        <p class="proj-desc">Custom content management system built for a publishing house. Tailored workflows, clean API, no bloat.</p>
+        <div class="proj-tags">
+          <span>Next.js</span><span>Node</span><span>PostgreSQL</span>
+        </div>
+        <span class="proj-link">View project</span>
+      </div>
+      <div class="project-card" onclick="openModal('dev2')">
+        <div class="proj-num">004 — Development</div>
+        <div class="proj-title">Daybreak App</div>
+        <p class="proj-desc">Morning routine tracking web app. Built for clarity, speed, and zero friction at 6am.</p>
+        <div class="proj-tags">
+          <span>React</span><span>Supabase</span><span>PWA</span>
+        </div>
+        <span class="proj-link">View project</span>
+      </div>
+      <div class="project-card add-project-card" onclick="openAddForm('dev')">
+        <div class="add-icon">+</div>
+        <div class="add-label">Add a project</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BRANDING -->
+  <div class="project-panel" id="panel-brand">
+    <div class="projects-grid">
+      <div class="project-card" onclick="openModal('brand1')">
+        <div class="proj-num">005 — Branding</div>
+        <div class="proj-title">Vessel Coffee</div>
+        <p class="proj-desc">Full brand identity for an independent specialty coffee roastery. Warm, tactile, and deeply human.</p>
+        <div class="proj-tags">
+          <span>Identity</span><span>Logo</span><span>Print</span>
+        </div>
+        <span class="proj-link">View project</span>
+      </div>
+      <div class="project-card" onclick="openModal('brand2')">
+        <div class="proj-num">006 — Branding</div>
+        <div class="proj-title">Northline Studio</div>
+        <p class="proj-desc">Digital-first rebrand for a creative agency. The brief was bold; the result was something they didn't expect.</p>
+        <div class="proj-tags">
+          <span>Rebrand</span><span>Motion</span><span>Digital</span>
+        </div>
+        <span class="proj-link">View project</span>
+      </div>
+      <div class="project-card add-project-card" onclick="openAddForm('brand')">
+        <div class="add-icon">+</div>
+        <div class="add-label">Add a project</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCES -->
+  <div class="project-panel" id="panel-exp">
+    <div class="projects-grid">
+      <div class="project-card" onclick="openModal('exp1')">
+        <div class="proj-num">007 — Experience</div>
+        <div class="proj-title">Drift — Interactive</div>
+        <p class="proj-desc">An immersive scroll-based web experience for a music album launch. 40k+ visitors in the first week.</p>
+        <div class="proj-tags">
+          <span>WebGL</span><span>GSAP</span><span>Interactive</span>
+        </div>
+        <span class="proj-link">View project</span>
+      </div>
+      <div class="project-card" onclick="openModal('exp2')">
+        <div class="proj-num">008 — Experience</div>
+        <div class="proj-title">The Archive</div>
+        <p class="proj-desc">Digital heritage experience for a museum. Historical depth, modern interface. Accessible and award-nominated.</p>
+        <div class="proj-tags">
+          <span>Accessibility</span><span>Three.js</span><span>Cultural</span>
+        </div>
+        <span class="proj-link">View project</span>
+      </div>
+      <div class="project-card add-project-card" onclick="openAddForm('exp')">
+        <div class="add-icon">+</div>
+        <div class="add-label">Add a project</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="section-header">
+  <span class="section-label">§ About</span>
+  <span class="section-title-big">The person behind the work</span>
+</div>
+
+<section id="about">
+  <div class="about-left">
+    <h2>Craft meets<br><em>code.</em></h2>
+    <p>I'm Kiaan — a web designer and developer who believes that the best digital experiences are the ones you barely notice. They just feel right.</p>
+    <p>I work at the intersection of design and engineering, which means I think about both pixels and performance, both aesthetics and accessibility.</p>
+    <p>Currently available for freelance projects and collaborations. Let's make something worth remembering.</p>
+    <br>
+    <a href="#contact" class="cta-btn">Get in touch →</a>
+  </div>
+  <div class="about-right">
+    <div class="skill-row">
+      <span class="skill-name">UI / UX Design</span>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-pct="92"></div></div>
+      <span class="skill-pct">92%</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">Frontend Dev</span>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-pct="88"></div></div>
+      <span class="skill-pct">88%</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">React / Next.js</span>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-pct="80"></div></div>
+      <span class="skill-pct">80%</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">Motion & Animation</span>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-pct="75"></div></div>
+      <span class="skill-pct">75%</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">Brand Identity</span>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-pct="70"></div></div>
+      <span class="skill-pct">70%</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">Backend / API</span>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-pct="65"></div></div>
+      <span class="skill-pct">65%</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="section-header">
+  <span class="section-label">§ Contact</span>
+  <span class="section-title-big">Start a conversation</span>
+</div>
+
+<section id="contact">
+  <div class="contact-left">
+    <h2>Let's<br><em>talk.</em></h2>
+    <p>Have a project in mind? Want to collaborate? Or just want to say hello? My inbox is always open.</p>
+    <div class="contact-detail">
+      <span class="contact-detail-label">Email</span>
+      <a href="mailto:hello@kiaan.co" class="contact-detail-value">hello@kiaan.co</a>
+    </div>
+    <div class="contact-detail">
+      <span class="contact-detail-label">Based</span>
+      <span class="contact-detail-value">Available worldwide</span>
+    </div>
+    <div class="contact-detail">
+      <span class="contact-detail-label">Status</span>
+      <span class="contact-detail-value" style="color: #5a8a3a;">● Open for work</span>
+    </div>
+  </div>
+  <div class="contact-right">
+    <h3>Send a message.</h3>
+    <div id="contactForm">
+      <div class="contact-field">
+        <label>Your name</label>
+        <input type="text" id="c-name" placeholder="Jane Smith" />
+      </div>
+      <div class="contact-field">
+        <label>Email address</label>
+        <input type="email" id="c-email" placeholder="jane@company.com" />
+      </div>
+      <div class="contact-field">
+        <label>Project type</label>
+        <input type="text" id="c-type" placeholder="Web design, development, branding..." />
+      </div>
+      <div class="contact-field">
+        <label>Message</label>
+        <textarea id="c-message" placeholder="Tell me about your project..."></textarea>
+      </div>
+      <button class="contact-submit" onclick="sendMessage()">Send Message →</button>
+      <div class="sent-msg" id="sentMsg">Message sent. I'll be in touch.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Kiaan.</span>
+  <span class="footer-copy">© 2025 — All rights reserved</span>
+</footer>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="projectModal" onclick="closeModal(event)">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModalDirect()">Close ×</button>
+    <div class="modal-image"><div class="modal-image-inner" id="modal-img-text">—</div></div>
+    <div class="modal-meta" id="modal-cat"></div>
+    <h3 id="modal-title"></h3>
+    <div class="modal-divider"></div>
+    <p id="modal-desc"></p>
+    <p id="modal-detail"></p>
+    <button class="modal-cta">View Live Project →</button>
+  </div>
+</div>
+
+<!-- ADD PROJECT MODAL -->
+<div class="modal-overlay" id="addModal" onclick="closeAddModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAddModalDirect()">Close ×</button>
+    <h3 style="margin-bottom: 0.5rem;">Add a project.</h3>
+    <div class="modal-divider"></div>
+    <div id="addForm">
+      <div class="form-field">
+        <label>Project title</label>
+        <input type="text" id="add-title" placeholder="Project name" />
+      </div>
+      <div class="form-field">
+        <label>Short description</label>
+        <textarea id="add-desc" placeholder="What's this project about?"></textarea>
+      </div>
+      <div class="form-field">
+        <label>Tags (comma separated)</label>
+        <input type="text" id="add-tags" placeholder="React, Figma, Branding..." />
+      </div>
+      <input type="hidden" id="add-category" />
+      <button class="form-submit" onclick="addProject()">Add Project →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const projects = {
+    web1: {
+      title: 'Studio Arkiv',
+      cat: '001 — Web Design',
+      img: 'Arkiv',
+      desc: 'Editorial portfolio for a Berlin-based architecture studio. Minimal grid, typographic hierarchy, and zero compromise on white space.',
+      detail: 'The challenge was to let the architecture speak. The result is a site that gets out of the way and lets the work breathe. Built in Figma, implemented in Next.js with a custom grid system.'
+    },
+    web2: {
+      title: 'Folio & Co.',
+      cat: '002 — Web Design',
+      img: 'Folio',
+      desc: 'E-commerce redesign for a premium stationery brand. Focused on texture, touch, and a tactile digital experience.',
+      detail: 'User research revealed customers wanted to feel the products before buying. The redesign introduced video texture swatches, material close-ups, and a streamlined checkout that reduced cart abandonment by 34%.'
+    },
+    dev1: {
+      title: 'Patchwork CMS',
+      cat: '003 — Development',
+      img: 'Patchwork',
+      desc: 'Custom content management system built for a publishing house. Tailored workflows, clean API, no bloat.',
+      detail: 'The publishing team needed a CMS that matched their editorial workflow exactly. Built from scratch with Node.js, PostgreSQL, and a React frontend — it now powers over 2,000 articles monthly.'
+    },
+    dev2: {
+      title: 'Daybreak App',
+      cat: '004 — Development',
+      img: 'Daybreak',
+      desc: 'Morning routine tracking web app. Built for clarity, speed, and zero friction at 6am.',
+      detail: 'A PWA that loads in under 1 second and works offline. Built with React and Supabase. Over 800 daily active users who use it every morning — the highest engagement metric of any project to date.'
+    },
+    brand1: {
+      title: 'Vessel Coffee',
+      cat: '005 — Branding',
+      img: 'Vessel',
+      desc: 'Full brand identity for an independent specialty coffee roastery. Warm, tactile, and deeply human.',
+      detail: 'From logo to packaging to the in-store experience. The brief was "coffee as ritual." Every touchpoint was designed to slow the customer down and make them notice the craft.'
+    },
+    brand2: {
+      title: 'Northline Studio',
+      cat: '006 — Branding',
+      img: 'North',
+      desc: 'Digital-first rebrand for a creative agency. The brief was bold; the result was something they didn\'t expect.',
+      detail: 'A rebrand that challenged the agency\'s own identity. The final system is asymmetric, unapologetic, and completely distinct from the noise in the creative industry.'
+    },
+    exp1: {
+      title: 'Drift — Interactive',
+      cat: '007 — Experience',
+      img: 'Drift',
+      desc: 'An immersive scroll-based web experience for a music album launch. 40,000+ visitors in the first week.',
+      detail: 'Built with GSAP and WebGL, this experience guides listeners through each track of the album as they scroll. It was featured in three design publications and drove 40k unique visitors in its first week.'
+    },
+    exp2: {
+      title: 'The Archive',
+      cat: '008 — Experience',
+      img: 'Archive',
+      desc: 'Digital heritage experience for a museum. Historical depth, modern interface. Accessible and award-nominated.',
+      detail: 'A Three.js-powered interactive archive of 5,000+ historical objects. Built to WCAG AA standards. Nominated for a cultural digital experience award in 2024.'
+    }
+  };
+
+  function openModal(id) {
+    const p = projects[id];
+    if (!p) return;
+    document.getElementById('modal-title').textContent = p.title;
+    document.getElementById('modal-cat').textContent = p.cat;
+    document.getElementById('modal-img-text').textContent = p.img;
+    document.getElementById('modal-desc').textContent = p.desc;
+    document.getElementById('modal-detail').textContent = p.detail;
+    document.getElementById('projectModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('projectModal')) closeModalDirect();
+  }
+
+  function closeModalDirect() {
+    document.getElementById('projectModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  let addCat = 'web';
+
+  function openAddForm(cat) {
+    addCat = cat;
+    document.getElementById('add-title').value = '';
+    document.getElementById('add-desc').value = '';
+    document.getElementById('add-tags').value = '';
+    document.getElementById('addModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAddModal(e) {
+    if (e.target === document.getElementById('addModal')) closeAddModalDirect();
+  }
+
+  function closeAddModalDirect() {
+    document.getElementById('addModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  let projectCount = 9;
+
+  function addProject() {
+    const title = document.getElementById('add-title').value.trim();
+    const desc = document.getElementById('add-desc').value.trim();
+    const tags = document.getElementById('add-tags').value.trim();
+    if (!title) return;
+
+    const id = 'custom-' + projectCount;
+    projects[id] = {
+      title,
+      cat: String(projectCount).padStart(3, '0') + ' — ' + catLabel(addCat),
+      img: title.slice(0, 6),
+      desc: desc || 'A new project.',
+      detail: 'Added to the portfolio.'
+    };
+
+    const panel = document.getElementById('panel-' + addCat);
+    const grid = panel.querySelector('.projects-grid');
+    const addCard = grid.querySelector('.add-project-card');
+
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.setAttribute('onclick', `openModal('${id}')`);
+
+    const tagsHtml = tags ? tags.split(',').map(t => `<span>${t.trim()}</span>`).join('') : '';
+
+    card.innerHTML = `
+      <div class="proj-num">${String(projectCount).padStart(3, '0')} — ${catLabel(addCat)}</div>
+      <div class="proj-title">${title}</div>
+      <p class="proj-desc">${desc || 'A new project.'}</p>
+      <div class="proj-tags">${tagsHtml}</div>
+      <span class="proj-link">View project</span>
+    `;
+
+    if (grid.children.length % 2 === 0) {
+      card.style.borderRight = '1px solid var(--border)';
+    } else {
+      card.style.borderRight = 'none';
+    }
+
+    grid.insertBefore(card, addCard);
+    projectCount++;
+    closeAddModalDirect();
+  }
+
+  function catLabel(cat) {
+    return { web: 'Web Design', dev: 'Development', brand: 'Branding', exp: 'Experience' }[cat] || cat;
+  }
+
+  // TABS
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.project-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // SKILL BARS
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-bar').forEach(bar => {
+          bar.style.width = bar.dataset.pct + '%';
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const aboutSection = document.getElementById('about');
+  if (aboutSection) observer.observe(aboutSection);
+
+  // CONTACT
+  function sendMessage() {
+    const name = document.getElementById('c-name').value.trim();
+    const email = document.getElementById('c-email').value.trim();
+    if (!name || !email) { alert('Please enter your name and email.'); return; }
+    document.getElementById('contactForm').querySelectorAll('input, textarea').forEach(el => el.value = '');
+    const msg = document.getElementById('sentMsg');
+    msg.style.display = 'block';
+    setTimeout(() => { msg.style.display = 'none'; }, 5000);
+  }
+</script>
+</body>
+</html>
